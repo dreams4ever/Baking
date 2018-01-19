@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+        <TextView
+            android:id="@+id/ingredientCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="(2)kilo"
+            android:layout_marginLeft="5dp"
+            />
+
+        <TextView
+            android:id="@+id/ingredientText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="salt"
+            android:layout_marginLeft="5dp"
+            />
+
+
+</LinearLayout>
