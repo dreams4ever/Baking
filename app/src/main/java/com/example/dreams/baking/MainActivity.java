@@ -2,6 +2,9 @@ package com.example.dreams.baking;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,11 +26,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
 
     @BindView(R.id.RecipesList)
     RecyclerView mRecycler;
     RecipesAdapter mRecipesAdapter;
 //    int mWidgetId;
+
+    /**
+     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
+     */
+    @VisibleForTesting
+    @NonNull
+    public SimpleIdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        // Get the IdlingResource instance
+        getIdlingResource().setIdleState(false);
 
         mRecycler.setHasFixedSize(true);
         mRecycler.setNestedScrollingEnabled(false);
@@ -58,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<RecipesModel>> call, Response<ArrayList<RecipesModel>> response) {
                 mRecipesAdapter.setData(response.body());
                 mRecipesAdapter.notifyDataSetChanged();
+                getIdlingResource().setIdleState(true);
 //                Gson gson = new Gson();
 //                Intent intent=getIntent();
 //                mWidgetId = intent.getIntExtra("recipe_widget", 0);
