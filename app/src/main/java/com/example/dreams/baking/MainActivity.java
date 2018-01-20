@@ -1,5 +1,7 @@
 package com.example.dreams.baking;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.dreams.baking.adapters.RecipesAdapter;
 import com.example.dreams.baking.models.RecipesModel;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -79,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 mRecipesAdapter.setData(response.body());
                 mRecipesAdapter.notifyDataSetChanged();
                 getIdlingResource().setIdleState(true);
+                SharedPreferences preferences = MainActivity.this.getSharedPreferences
+                        ("DEFAULT", Context.MODE_PRIVATE);
+                if (preferences.getString("WIDGET_RECIPE_KEY", "").isEmpty()) {
+                    Gson gson = new Gson();
+                    String recipesModel = gson.toJson(response.body().get(0), RecipesModel.class);
+                    preferences.edit().putString("WIDGET_RECIPE_KEY", recipesModel).apply();
+                }
 //                Gson gson = new Gson();
 //                Intent intent=getIntent();
 //                mWidgetId = intent.getIntExtra("recipe_widget", 0);
