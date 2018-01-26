@@ -81,14 +81,14 @@ public class StepDesFragment extends Fragment {
         mStepsModel = getArguments().getParcelable("step");
         mStepDescription.setText(mStepsModel != null ? mStepsModel.getDescription() : "No Data");
         if (!mStepsModel.getThumbnailURL().isEmpty()) {
-            mStepImageView.setVisibility(View.GONE);
+            mStepImageView.setVisibility(View.VISIBLE);
             Picasso.with(mContext)
                     .load(mStepsModel.getThumbnailURL())
                     .resize(50, 50)
                     .centerCrop()
                     .into(mStepImageView);
         } else
-            mStepImageView.setVisibility(View.VISIBLE);
+            mStepImageView.setVisibility(View.GONE);
 
         if (mStepsModel.getVideoURL().isEmpty())
             mExoPlayerView.setVisibility(View.GONE);
