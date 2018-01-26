@@ -20,6 +20,10 @@ public class RecipesModel implements Parcelable{
     @Expose
     private String name;
 
+    @SerializedName("image")
+    @Expose
+    private String image;
+
     @SerializedName("ingredients")
     @Expose
     private List<IngredientsModel> result = null;
@@ -31,6 +35,7 @@ public class RecipesModel implements Parcelable{
     protected RecipesModel(Parcel in) {
         id = in.readInt();
         name = in.readString();
+        image = in.readString();
         result = in.createTypedArrayList(IngredientsModel.CREATOR);
         steps = in.createTypedArrayList(StepsModel.CREATOR);
     }
@@ -56,6 +61,11 @@ public class RecipesModel implements Parcelable{
     }
 
 
+    public String getImage() {
+        return image;
+    }
+
+
     public List<IngredientsModel> getIngredientsResult() {
         return result;
     }
@@ -73,6 +83,7 @@ public class RecipesModel implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(name);
+        dest.writeString(image);
         dest.writeTypedList(result);
         dest.writeTypedList(steps);
     }

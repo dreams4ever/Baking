@@ -25,11 +25,16 @@ public class StepsModel implements Parcelable {
     @Expose
     private String videoURL;
 
+    @SerializedName("thumbnailURL")
+    @Expose
+    private String thumbnailURL;
+
     protected StepsModel(Parcel in) {
         id = in.readInt();
         shortDescription = in.readString();
         description = in.readString();
         videoURL = in.readString();
+        thumbnailURL = in.readString();
     }
 
     public static final Creator<StepsModel> CREATOR = new Creator<StepsModel>() {
@@ -60,6 +65,10 @@ public class StepsModel implements Parcelable {
         return videoURL;
     }
 
+    public String getThumbnailURL() {
+        return thumbnailURL;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -71,5 +80,6 @@ public class StepsModel implements Parcelable {
         dest.writeString(shortDescription);
         dest.writeString(description);
         dest.writeString(videoURL);
+        dest.writeString(thumbnailURL);
     }
 }

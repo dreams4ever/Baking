@@ -19,6 +19,7 @@ import com.example.dreams.baking.R;
 import com.example.dreams.baking.models.RecipesModel;
 import com.example.dreams.baking.widget.WidgetProvider;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,14 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHo
             // inactive
             holder.mWidgetIcon.setImageResource(android.R.drawable.star_off);
         }
+
+        if (!mList.get(i).getImage().isEmpty())
+            Picasso.with(mContext)
+                    .load(mList.get(i).getImage())
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(holder.mRecipeIcon);
+
         holder.itemClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +124,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHo
         RelativeLayout itemClick;
         @BindView(R.id.widgetIcon)
         ImageView mWidgetIcon;
+        @BindView(R.id.recipeIcon)
+        ImageView mRecipeIcon;
 
 
         MyViewHolder(View itemView) {
